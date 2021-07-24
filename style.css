@@ -5,7 +5,7 @@
 }
 
 .container {
-  margin: 0 auto;
+  margin: 10px auto;
   width: 60vw;
   height: 60vh;
   overflow: hidden;
@@ -14,6 +14,10 @@
 
 .container p {
   position: absolute;
+}
+
+#imgAtual {
+  background-color: rgba(255, 255, 255, 0.878);
 }
 
 img {
@@ -33,9 +37,15 @@ img {
 
 .controls span {
   padding: 10px;
+  height: 100%;
   color: white;
-  background-color: rgba(0, 0, 0, 0.619);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.controls span:hover {
+  background-color: rgba(0, 0, 0, 0.619);
 }
 
 .indicadores {
