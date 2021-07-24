@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  width: 60vw;
+  height: 60vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.container p {
+  position: absolute;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.controls {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls span {
+  padding: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.619);
+  cursor: pointer;
+}
+
+.indicadores {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  clip-path: circle();
+  background-color: grey;
+  margin: 0 5px;
+}
