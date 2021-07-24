@@ -38,7 +38,7 @@ voltar.addEventListener('click', function () {
   if (imgNumber > 0) {
     imgNumber--;
     imgScreen[0].innerHTML = images[imgNumber].outerHTML;
-    imgAtual.innerHTML = `${imgNumber+1} / ${urlImg.length-1}`;
+    imgAtual.innerHTML = `${imgNumber+1} / ${urlImg.length}`;
     circle[imgNumber+1].style.backgroundColor = "grey";
     circle[imgNumber].style.backgroundColor = "black";
   }
