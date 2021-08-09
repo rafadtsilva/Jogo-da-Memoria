@@ -1,45 +1,125 @@
+const front = "card_front";
+const back = "card_back";
+const card = "card";
+const icon = "icon";
 
-//PEGANDO HTMLS
-let imgScreen = document.getElementsByClassName('imagens');
-let img = document.getElementsByTagName('img');
-let avancar = document.getElementById('avancar');
-let voltar = document.getElementById('voltar');
-let imgAtual = document.getElementById('imgAtual');
-let circle = document.getElementsByClassName('circle')
+let nations = ['ale',
+  'arg',
+  'bra',
+  'chi',
+  'esp',
+  'fra',
+  'ing',
+  'jap',
+  'sui',
+  'usa'];
 
+let cards = null;
 
+startGame();
 
-console.log(imgAtual)
+function startGame() {
+  cards = createCardsFromNations(nations);
+  shuffleCards(cards);
 
-//DEFININDO VARIAVEIS
-let urlImg = ["assets/imagem1.jpg", "assets/imagem2.jpg", "assets/imagem3.jpg", "assets/imagem4.jpg"]
-let images = [];
-let imgNumber = 0;
+  initializeCards(cards);
 
-imgAtual.innerHTML = `${imgNumber+1} / ${urlImg.length}`;
-circle[imgNumber].style.backgroundColor = "black";
+}
 
-urlImg.forEach((element, item) => {
-  images[item] = new Image();
-  images[item].src = element;
-});
+function initializeCards(cards) {
+  let gameBoard = document.getElementById("gameBoard");
+  
+  cards.forEach(card => {
+    
+    let cardElement = document.createElement('div');
+    cardElement.id = card.id;
+    cardElement.classList.add('card');
+    cardElement.dataset.icon = card.icon;
 
-avancar.addEventListener('click', function () {
-  if (imgNumber < urlImg.length-1) {
-    imgNumber++;
-    imgScreen[0].innerHTML = images[imgNumber].outerHTML;
-    imgAtual.innerHTML = `${imgNumber+1} / ${urlImg.length}`;
-    circle[imgNumber-1].style.backgroundColor = "grey";
-    circle[imgNumber].style.backgroundColor = "black";
+    createCardContent(card, cardElement);
+
+    cardElement.addEventListener('click', flipCard)
+    gameBoard.appendChild(cardElement);
+
+  })
+
+}
+
+function createCardContent(card, cardElement) {
+
+  createCardFace(front, card, cardElement);
+  createCardFace(back, card, cardElement)
+
+}
+
+function createCardFace(face, card, element) {
+
+  let cardElementFace = document.createElement('div');
+  cardElementFace.classList.add(face);
+
+  if(face === front) {
+    let iconElement = document.createElement('img');
+    iconElement.classList.add(icon);
+    iconElement.src = "./assets/images/" + card.icon + ".png";
+    cardElementFace.appendChild(iconElement);
+  } else {
+    cardElementFace.innerHTML = "&lt/&gt";
   } 
-})
 
-voltar.addEventListener('click', function () {
-  if (imgNumber > 0) {
-    imgNumber--;
-    imgScreen[0].innerHTML = images[imgNumber].outerHTML;
-    imgAtual.innerHTML = `${imgNumber+1} / ${urlImg.length}`;
-    circle[imgNumber+1].style.backgroundColor = "grey";
-    circle[imgNumber].style.backgroundColor = "black";
+  element.appendChild(cardElementFace);
+
+}
+
+
+function shuffleCards(cards) {
+  let currentIndex = cards.length;
+  let randomIndex = 0;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [cards[randomIndex], cards[currentIndex]] = [cards[currentIndex], cards[randomIndex]];
   }
-})
+
+  [cards[randomIndex], cards[currentIndex]] = [cards[currentIndex], cards[randomIndex]];
+  
+
+}
+
+createCardsFromNations(nations)
+function createCardsFromNations (nations) {
+
+  let cards = [];
+
+  nations.forEach((nation) =>  {
+    cards.push(createPairFromNations(nation));
+  })
+
+  return cards.flatMap(pair => pair);
+
+}
+
+function createPairFromNations(nation) {
+
+  return [{
+    id: createIdWithNation(nation),
+    icon: nation,
+    flipped: false,
+  }, {
+    id: createIdWithNation(nation),
+    icon: nation,
+    flipped: false,
+  }]
+
+}
+
+function createIdWithNation(nation) {
+  return nation + parseInt(Math.random() * 1000)
+}
+
+function flipCard() {
+
+  this.classList.add("flip");
+
+}
