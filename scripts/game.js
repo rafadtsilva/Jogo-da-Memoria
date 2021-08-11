@@ -16,6 +16,10 @@ let game = {
   'usa'],
   
   cards: null,
+  segundos: 0,
+  minutos: 0,
+  firstMove: true,
+  tries: 0,
 
   setCard: function (id) {
 
@@ -39,6 +43,8 @@ let game = {
   },
 
   checkMatch: function () {
+    this.tries++
+    setTries();
     if (!this.firstCard || !this.secondCard) {
       return false
     } else {
@@ -105,6 +111,21 @@ let game = {
       [this.cards[randomIndex], this.cards[currentIndex]] = [this.cards[currentIndex], this.cards[randomIndex]];
     }
   
+  },
+
+  timer: function () {
+    
+    control = setInterval(() => {
+      if(this.segundos < 60) {
+        this.segundos++
+      } else {
+        this.minutos++;
+        this.segundos=0;
+      }
+      setClock();
+    }, 1000);
+
+    setClock();
   }
   
 

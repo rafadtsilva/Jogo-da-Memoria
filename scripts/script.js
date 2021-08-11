@@ -59,6 +59,11 @@ function createCardFace(face, card, element) {
 
 function flipCard() {
 
+  if(game.firstMove) {
+    game.timer();
+    game.firstMove=false;
+  }
+
   if(game.setCard(this.id)){
 
     this.classList.add("flip");
@@ -67,6 +72,7 @@ function flipCard() {
       if(game.checkMatch()) {
           game.clearCards();
           if (game.checkGameOver()) {
+            clearInterval(control);
             let gameOverLayer = document.getElementById("gameOver")
             gameOverLayer.style.display = 'flex';
           }
@@ -88,6 +94,39 @@ function flipCard() {
 
 function restart() {
   startGame();
+  game.minutos = 0;
+  game.segundos = 0;
+  game.tries = 0;
+  setClock();
+  setTries();
   let gameOverLayer = document.getElementById("gameOver")
   gameOverLayer.style.display = 'none';
+}
+
+function setClock () {
+  let secondsTag = document.getElementById("seconds");
+  let minutesTag = document.getElementById("minutes");
+
+  if(game.segundos < 10) {
+    secondsTag.innerText = `:0${game.segundos}`;
+  } else {
+    secondsTag.innerText = `:${game.segundos}`;
+  }
+
+  if(game.minutos < 10) {
+    minutesTag.innerText = `0${game.minutos}`
+  } else {
+    minutesTag.innerText = `${game.minutos}`
+  }
+  
+}
+
+function setTries() {
+  let tries = document.getElementById("try");
+
+  if(game.tries < 10) {
+    tries.innerHTML = `0${game.tries}`;
+  } else {
+    tries.innerHTML = `${game.tries}`;
+  }
 }
